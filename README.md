@@ -1,5 +1,7 @@
 # claude-statusline-state
 
+English | [한국어](README.ko.md)
+
 A Claude Code status line that shows whether the session is **Running**, **Needs approval**, or **Idle**, plus the number of background tasks still in flight.
 
 ```
