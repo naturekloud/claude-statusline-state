@@ -30,6 +30,27 @@ A Claude Code status line that shows whether the session is **Running**, **Needs
 
 Requires `python3`. The scripts use `bash` and `git`.
 
+## Verification
+
+Tested on Claude Code 2.1.308 with Linux (WSL2), bash and python3. macOS and Windows were not tested.
+
+**Checked in a real session**
+- The hooks write `running` during a turn, and the status line reads it.
+- Background shell task: with `sleep 600` running in the background, the `Stop` hook wrote `1` to `<session_id>.bg`. After the task was stopped, the next `Stop` wrote `0`.
+- Render time is about 0.05 s per run with a 1 MB transcript.
+
+**Checked only with synthetic input** (built to match the documented hook JSON)
+- Idle and approval transitions, and the `+ N background` label in each state.
+- Counting only unfinished tasks, keeping the count when an event has no snapshot, clearing on `SessionStart` and `SessionEnd`.
+- The hook printing nothing and exiting 0 on malformed input.
+- Esc interrupt detection. Both marker strings exist in the Claude Code binary, but no real transcript with a marker was available, so the entry shape (a `user` entry whose text starts with the marker) is an assumption. Esc was never pressed in a real session.
+
+**Not checked**
+- `Needs approval` during a real permission prompt or `AskUserQuestion` dialog.
+- Background subagents, monitors and workflows. Only a shell task was tried.
+- A background task finishing on its own and waking Claude for a new turn, so that `Stop` refreshes the count.
+- The rendered `Idle` label after a real `Stop`. The `Stop` branch ran on real input, but the label itself was not checked.
+
 ## Limitations
 
 - The background count is a snapshot taken at `Stop`. It updates when the next `Stop` fires, for example when a finished background task wakes Claude for a new turn.
