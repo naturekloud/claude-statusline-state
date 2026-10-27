@@ -19,6 +19,21 @@
 
 ## 설치
 
+```bash
+git clone https://github.com/naturekloud/claude-statusline-state.git
+cd claude-statusline-state
+./install.sh
+```
+
+`install.sh`는 스크립트 두 개를 `~/.claude`에 복사하고, hook과 `statusLine`을 `~/.claude/settings.json`에 합칩니다.
+
+- 기존 hook은 그대로 둡니다. `settings.json`이 바뀌기 전에 `settings.json.bak.<timestamp>`로 백업합니다.
+- 기존 `statusLine` 설정은 교체하고, 기존 `statusline.sh`는 백업합니다.
+- 다시 실행해도 안전합니다. `~/.claude`가 아닌 곳에 설치하려면 `CLAUDE_DIR`을 지정하세요.
+- `./install.sh --uninstall`은 파일, hook 항목, `statusLine` 항목을 제거합니다. 이전 `statusLine`을 되살리려면 백업에서 복사하세요.
+
+### 수동 설치
+
 1. 파일을 복사합니다.
 
    ```bash
@@ -45,6 +60,7 @@ Claude Code 2.1.308, Linux(WSL2), bash, python3 환경에서 테스트했습니�
 - Idle과 승인 대기 전환, 각 상태에서의 `+ N background` 표시.
 - 끝나지 않은 작업만 세기, 스냅샷이 없는 이벤트에서는 개수 유지, `SessionStart`와 `SessionEnd`에서 정리.
 - 잘못된 입력에서 hook이 아무것도 출력하지 않고 0으로 종료하는 것.
+- `install.sh`를 임시 홈 디렉터리에서 실행: 새로 설치, 다시 실행, 다른 hook과 다른 `statusLine`이 이미 있는 설정에 합치기, 제거, 잘못된 JSON, `CLAUDE_DIR`. 다른 사람의 실제 설정에 대해서는 실행해 보지 않았고 macOS에서도 해 보지 않았습니다.
 - Esc 중단 감지. 두 문구는 Claude Code 바이너리에 있지만 문구가 실제로 찍힌 transcript는 구하지 못했습니다. 그래서 항목의 모양(문구로 시작하는 텍스트를 가진 `user` 항목)은 가정입니다. 실제 세션에서 Esc를 눌러 본 적은 없습니다.
 
 **확인하지 못한 것**

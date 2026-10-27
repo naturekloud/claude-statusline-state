@@ -19,6 +19,21 @@ A Claude Code status line that shows whether the session is **Running**, **Needs
 
 ## Install
 
+```bash
+git clone https://github.com/naturekloud/claude-statusline-state.git
+cd claude-statusline-state
+./install.sh
+```
+
+`install.sh` copies the two scripts into `~/.claude` and merges the hooks and `statusLine` into `~/.claude/settings.json`.
+
+- Your existing hooks are kept. `settings.json` is backed up as `settings.json.bak.<timestamp>` before it changes.
+- An existing `statusLine` setting is replaced, and an existing `statusline.sh` is backed up.
+- It is safe to re-run. Set `CLAUDE_DIR` to install somewhere other than `~/.claude`.
+- `./install.sh --uninstall` removes the files, the hook entries and the `statusLine` entry. To get a previous `statusLine` back, copy it from the backup.
+
+### Manual install
+
 1. Copy the files:
 
    ```bash
@@ -45,6 +60,7 @@ Tested on Claude Code 2.1.308 with Linux (WSL2), bash and python3. macOS and Win
 - Idle and approval transitions, and the `+ N background` label in each state.
 - Counting only unfinished tasks, keeping the count when an event has no snapshot, clearing on `SessionStart` and `SessionEnd`.
 - The hook printing nothing and exiting 0 on malformed input.
+- `install.sh`, run against temporary home directories: fresh install, re-run, merging into settings that already have other hooks and a different `statusLine`, uninstall, invalid JSON, and `CLAUDE_DIR`. It has not been run against anyone's real settings, and not on macOS.
 - Esc interrupt detection. Both marker strings exist in the Claude Code binary, but no real transcript with a marker was available, so the entry shape (a `user` entry whose text starts with the marker) is an assumption. Esc was never pressed in a real session.
 
 **Not checked**
